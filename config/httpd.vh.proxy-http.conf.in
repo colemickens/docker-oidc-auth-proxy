@@ -1,0 +1,23 @@
+<VirtualHost *:8080>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    # this is required by mod_auth_openidc
+    OIDCCryptoPassphrase a-random-secret-used-by-apache-oidc-and-balancer
+
+    OIDCSSLValidateServer "${OIDC_SSL_VALIDATE_SERVER}"
+    OIDCProviderMetadataURL "${OIDC_URL}/auth/realms/${OIDC_REALM}/.well-known/openid-configuration"
+
+    OIDCClientID "${OIDC_CLIENT_ID}"
+    OIDCClientSecret "${OIDC_CLIENT_SECRET}"
+
+    OIDCRedirectURI "${PROXY_BASE_URL}/redirect_uri"
+
+    # have the credentials presented as part of the post parameters
+    OIDCProviderTokenEndpointAuth client_secret_post
+    # maps the prefered_username claim to the REMOTE_USER environment variable
+    OIDCRemoteUserClaim preferred_username
+
+    # Load configuration files for the default server block.
+    IncludeOptional /etc/httpd/default.d/*.conf
+</VirtualHost>

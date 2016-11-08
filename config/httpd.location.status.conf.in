@@ -1,0 +1,6 @@
+<Location "${HTTPD_STATUS_LOCATION}">
+  SetHandler server-status
+
+  Allow from "${HTTPD_STATUS_ALLOW}"
+  Deny from "${HTTPD_STATUS_DENY}"
+</Location>

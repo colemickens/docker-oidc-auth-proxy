@@ -1,0 +1,11 @@
+<LocationMatch "${PROXY_LOCATION_MATCH}">
+  AuthType openid-connect
+
+  # Tests whether an authenticated user is authorized by an authorization OpenId Connect Provider.
+  Require ${PROXY_REQUIRE_DIRECTIVE}
+
+  ProxyPass "${REMOTE_BASE_URL}"
+  ProxyPassReverse "${REMOTE_BASE_URL}"
+  # ProxyPassReverseCookieDomain  "backend.example.com"  "public.example.com"
+  # ProxyPassReverseCookiePath  "/"  "/mirror/foo/"
+</LocationMatch>
